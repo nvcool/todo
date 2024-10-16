@@ -9,10 +9,20 @@ export default {
       darkPurple: "#534CC2",
       white: "#F7F7F7",
       black: "#252525",
+      red: "#E50000",
+      grey: "#CDCDCD",
     },
     fontFamily: {
       inter: "Inter",
       kanit: "Kanit",
+    },
+    container: {
+      screens: {
+        sm: "390px",
+        md: "777px",
+        lg: "777px",
+        xl: "777px",
+      },
     },
     extend: {},
   },

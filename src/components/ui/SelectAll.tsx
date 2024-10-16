@@ -13,10 +13,22 @@ const items: Record<string, ItemValues> = {
 const SelectAll: React.FC = () => {
   const [value, setValue] = React.useState<string>("all"); // Устанавливаем значение как string
   const [open, setOpen] = React.useState(false); // Состояние для отслеживания открытия
+  const [active, setActive] = React.useState(false);
 
   return (
-    <Select.Root value={value} onValueChange={setValue} onOpenChange={setOpen}>
-      <Select.Trigger className="flex w-36 justify-between items-center bg-purple p-[10px] rounded-[5px] text-white uppercase outline-none ">
+    <Select.Root
+      value={value}
+      onValueChange={setValue}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        setActive(isOpen);
+      }}>
+      <Select.Trigger
+        className="flex w-36 justify-between items-center bg-purple p-[10px] rounded-[5px] text-white uppercase outline-none"
+        style={{
+          backgroundColor: active ? "#534CC2" : "#6C63FF",
+          transition: "transform 0.3s ease",
+        }}>
         <Select.Value aria-label={value}>
           {Object.keys(items).find(
             (key) => items[key as keyof typeof items] === value
