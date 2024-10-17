@@ -7,6 +7,7 @@ interface NewNoteModalProps {
   onAddNote: (text: string) => void;
   onEditNote: (text: string) => void;
   currentNote: { text: string; index: number } | null;
+  isDarkTheme: boolean; // Новый пропс для темной темы
 }
 
 const NewNoteModal: React.FC<NewNoteModalProps> = ({
@@ -15,6 +16,7 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({
   onAddNote,
   onEditNote,
   currentNote,
+  isDarkTheme,
 }) => {
   const [noteText, setNoteText] = useState("");
 
@@ -45,8 +47,16 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="inset-0 fixed bg-black bg-opacity-70" />
-        <Dialog.Content className="fixed bg-white top-[118px] left-1/2 py-[18px] px-[30px] -translate-x-1/2 h-[289px] mx-auto rounded-[16px]">
-          <Dialog.Title className="uppercase text-2xl font-medium text-center mb-[25px]">
+        <Dialog.Content
+          className={`fixed top-[118px] left-1/2 py-[18px] px-[30px] -translate-x-1/2 h-[289px] mx-auto rounded-[16px] ${
+            isDarkTheme
+              ? "bg-black border border-white outline-none"
+              : "bg-white"
+          }`}>
+          <Dialog.Title
+            className={`uppercase text-2xl font-medium text-center mb-[25px] ${
+              isDarkTheme ? "text-white" : "text-black"
+            }`}>
             New Note
           </Dialog.Title>
           <input
@@ -54,7 +64,11 @@ const NewNoteModal: React.FC<NewNoteModalProps> = ({
             onChange={(e) => setNoteText(e.target.value)}
             onKeyDown={handleKeyDown} // Добавляем обработчик нажатия клавиш
             placeholder="Input your note..."
-            className="text-purple rounded-[5px] border border-purple py-[10px] px-4 w-[440px] focus:outline-none focus:ring-2 transition duration-200 ease-in-out"
+            className={` rounded-[5px] border  py-[10px] px-4 w-[440px] focus:outline-none focus:ring-2 transition duration-200 ease-in-out ${
+              isDarkTheme
+                ? "text-white bg-black border-white"
+                : "text-purple border-purple bg-white"
+            }`}
             type="text"
           />
           <button

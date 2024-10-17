@@ -11,17 +11,16 @@ const items: Record<string, ItemValues> = {
 };
 
 // Изменяем сигнатуру компонента, добавляем onChange
-const SelectAll: React.FC<{ onChange: (value: ItemValues) => void }> = ({
-  onChange,
-}) => {
-  const [value, setValue] = React.useState<ItemValues>("all");
+const SelectAll: React.FC<{
+  value: ItemValues;
+  onChange: (value: ItemValues) => void;
+}> = ({ value, onChange }) => {
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState(false);
 
-  // Обработка изменения значения
   const handleValueChange = (newValue: ItemValues) => {
-    setValue(newValue);
-    onChange(newValue); // Вызываем функцию обратного вызова
+    onChange(newValue);
+    setOpen(false); // Закрываем селектор после выбора
   };
 
   return (
@@ -55,7 +54,7 @@ const SelectAll: React.FC<{ onChange: (value: ItemValues) => void }> = ({
 
       <Select.Portal>
         <Select.Content
-          className="border border-purple text-purple rounded-[5px]"
+          className="border border-purple text-purple rounded-[5px] bg-white"
           position="popper">
           <Select.Viewport className="grid w-36 ">
             {Object.entries(items).map(([label, value]) => (
