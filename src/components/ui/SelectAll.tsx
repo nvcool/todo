@@ -10,15 +10,24 @@ const items: Record<string, ItemValues> = {
   Incomplete: "incomplete",
 };
 
-const SelectAll: React.FC = () => {
-  const [value, setValue] = React.useState<string>("all"); // Устанавливаем значение как string
-  const [open, setOpen] = React.useState(false); // Состояние для отслеживания открытия
+// Изменяем сигнатуру компонента, добавляем onChange
+const SelectAll: React.FC<{ onChange: (value: ItemValues) => void }> = ({
+  onChange,
+}) => {
+  const [value, setValue] = React.useState<ItemValues>("all");
+  const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState(false);
+
+  // Обработка изменения значения
+  const handleValueChange = (newValue: ItemValues) => {
+    setValue(newValue);
+    onChange(newValue); // Вызываем функцию обратного вызова
+  };
 
   return (
     <Select.Root
       value={value}
-      onValueChange={setValue}
+      onValueChange={handleValueChange} // Используем новую функцию
       onOpenChange={(isOpen) => {
         setOpen(isOpen);
         setActive(isOpen);
